@@ -1,0 +1,79 @@
+{
+	"pages": [
+		//pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+            "path" : "pages/bookshelf/bookshelf",
+            "style" : {
+				"navigationBarTitleText":"书架",
+				"enablePullDownRefresh":true
+			}
+        }
+        ,{
+            "path" : "pages/selected/selected",
+            "style" : {
+				"navigationBarTitleText":"精选"
+			}
+        }
+        ,{
+            "path" : "pages/my/my",
+            "style" : {
+				"navigationBarTitleText":"我"
+			}
+        }
+        ,{
+            "path" : "pages/bookshelf/read/read",
+            "style" : {
+				"navigationStyle": "custom"
+			}
+        }
+        ,{
+            "path" : "pages/selected/search/search",
+            "style" : {
+				"navigationBarTitleText":"搜索结果"
+			}
+        }
+        ,{
+            "path" : "pages/bookshelf/bookinfo/bookinfo",
+            "style" : {
+				"navigationStyle": "custom"
+			}
+        }
+        ,{
+            "path" : "pages/bookshelf/bookinfo/chapter/chapter",
+            "style" : {
+				"navigationBarTitleText":"目录"
+			}
+        }
+    ],
+	"globalStyle": {
+		"navigationBarTextStyle": "white",
+		"navigationBarTitleText": "书虫",
+		"navigationBarBackgroundColor": "#e54d42",
+		"backgroundColor": "#fff"
+	},
+	"tabBar": {
+		"borderStyle": "black",
+		"backgroundColor": "#fff",
+		"color": "#8F8F94",
+		"selectedColor": "#e54d42",
+		"list": [{
+				"pagePath": "pages/bookshelf/bookshelf",
+				"iconPath": "static/img/tabbar/shujia.png",
+				"selectedIconPath": "static/img/tabbar/shujiaactive.png",
+				"text": "书架"
+			},
+			{
+				"pagePath": "pages/selected/selected",
+				"iconPath": "static/img/tabbar/guanzhu.png",
+				"selectedIconPath": "static/img/tabbar/guanzhuactive.png",
+				"text": "精选"
+			},
+			{
+				"pagePath": "pages/my/my",
+				"iconPath": "static/img/tabbar/me.png",
+				"selectedIconPath": "static/img/tabbar/meactive.png",
+				"text": "我"
+			}
+		]
+	}
+}
