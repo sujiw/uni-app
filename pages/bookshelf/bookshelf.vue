@@ -19,7 +19,7 @@
 		<view class="cu-list menu-avatar">
 			<view :class="'cu-item ' + ((modalName=='move-box-'+ index)?'move-cur':'')" v-for="(item,index) in book_list"
 			 v-bind:key="index" @touchstart="ListTouchStart" @touchmove="ListTouchMove" @touchend="ListTouchEnd" :data-target="'move-box-'+index">
-				<view class="book_body" @click="doRead" :data-index="index">
+				<view class="book_body" @click="doRead" :data-index="index" @longpress="doDelete">
 					<view class="book_image">
 						<image :src="item['image']" mode="aspectFill"></image>
 					</view>
@@ -42,6 +42,9 @@
 					<view class="bg-red" :data-index="index" @click="doDelete">删除</view>
 				</view>
 			</view>
+			<!-- #ifdef H5 -->
+			<view style="margin-top: 160upx;"></view>
+			<!-- #endif -->
 		</view>
 		<view class="bg" v-if="!book_list || book_list.length == 0">
 			<image src="../../static/img/bookshelf/shujia.png" mode="aspectFit"></image>
