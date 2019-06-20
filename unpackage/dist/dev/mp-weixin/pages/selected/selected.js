@@ -210,7 +210,7 @@ var _default =
     },
     tabSelect: function tabSelect(e) {
       this.TabCur = e.currentTarget.dataset.id;
-      switch (this.TabCur) {
+      switch (parseInt(this.TabCur)) {
         case 0:
           if (!this.recommendList) this.getRecommendList();
           break;
