@@ -52,9 +52,11 @@
 				if (!this.chapter_sort)
 					id = (this.book_info.chapter.length - 1) - id;
 				uni.navigateBack();
-				uni.redirectTo({
-					url: '/pages/bookshelf/read/read?id=' + id,
-				})
+				setTimeout(function(){
+					uni.redirectTo({
+						url: '/pages/bookshelf/read/read?id=' + id,
+					})
+				},100);
 			}
 		},
 		onLoad() {

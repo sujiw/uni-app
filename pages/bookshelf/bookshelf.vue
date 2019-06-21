@@ -26,7 +26,7 @@
 					<view class="book_info">
 						<view class="book_titie margin-bottom-sm" style="position: relative;">
 							{{item.title}}
-							<view class="cu-tag badge" style="z-index: 99999;" v-if="item.update">{{item.update}}}</view>
+							<view class="cu-tag badge" style="z-index: 99999;" v-if="item.update">{{item.update}}</view>
 						</view>
 						<view class="book_desc">
 							{{item.author}} · {{item.chapter.length - (item.chapterid?item.chapterid:0)}}章未读
@@ -132,7 +132,10 @@
 			uni.request({
 				url: this.api_url['bookupdate'],
 				method: 'POST',
-				data: newBooklist,
+				header: {
+				  'content-type': 'application/x-www-form-urlencoded'
+				},
+				data: JSON.stringify(newBooklist),
 				success: (res) => {
 					var array = res.data;
 					for (var i = 0; i < array.length; i++) {

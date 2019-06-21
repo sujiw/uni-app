@@ -60,6 +60,9 @@
 //
 //
 //
+//
+//
+//
 var _default =
 {
   data: function data() {
@@ -139,7 +142,10 @@ var _default =
     uni.request({
       url: this.api_url['bookupdate'],
       method: 'POST',
-      data: newBooklist,
+      header: {
+        'content-type': 'application/x-www-form-urlencoded' },
+
+      data: JSON.stringify(newBooklist),
       success: function success(res) {
         var array = res.data;
         for (var i = 0; i < array.length; i++) {

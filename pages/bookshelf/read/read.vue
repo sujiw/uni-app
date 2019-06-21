@@ -26,11 +26,11 @@
 		</scroll-view>
 		<view class="bottom_view" v-if="isSet">
 			<view class="text_control">
-				<view @click='setfontSize' :data-value='-1'>Aa-</view>
+				<view @click='setFontSize' :data-value='-1'>Aa-</view>
 				<view class="pro_bar">
 					<slider :value="fontSize" @change="setFontSize" @changing="setFontSize" :min="20" :max="60" show-value />
 				</view>
-				<view @click='setfontSize' :data-value='1'>Aa+</view>
+				<view @click='setFontSize' :data-value='1'>Aa+</view>
 			</view>
 			<view class="line"></view>
 			<view class="img_control">
