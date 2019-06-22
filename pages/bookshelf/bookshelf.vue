@@ -29,7 +29,7 @@
 							<view class="cu-tag badge" style="z-index: 99999;" v-if="item.update">{{item.update}}</view>
 						</view>
 						<view class="book_desc">
-							{{item.author}} · {{item.chapter.length - (item.chapterid?item.chapterid:0)}}章未读
+							{{item.author}} · {{(item.chapter.length-1) - (item.chapterid?item.chapterid:0)}}章未读
 						</view>
 						<view class="book_chapter">
 							最新章节 · {{item.chapter[item.chapter.length-1].name}}
@@ -104,6 +104,47 @@
 						uni.setStorageSync('booklist', this.book_list);
 					},
 				});
+			},
+			updateBook(){
+				if (this.book_list.length == 0) uni.stopPullDownRefresh();
+				uni.showNavigationBarLoading();
+				var booklist = this.book_list
+				var newBooklist = [];
+				for (var i = 0; i < booklist.length; i++) {
+					// for (var j = 0; j < booklist[i].chapter.length;j++)
+					//   if (booklist[i].chapter[j].body)
+					//     delete booklist[i].chapter[j].body;
+					var newBook = {};
+					newBook.chapterlength = booklist[i].chapter.length;
+					newBook.webid = booklist[i]._id;
+					newBook.url = booklist[i].url;
+					newBooklist.push(newBook);
+				}
+				var _this = this;
+				uni.request({
+					url: this.api_url['bookupdate'],
+					method: 'POST',
+					header: {
+					  'content-type': 'application/x-www-form-urlencoded'
+					},
+					data: JSON.stringify(newBooklist),
+					success: (res) => {
+						var array = res.data;
+						for (var i = 0; i < array.length; i++) {
+							if (array[i].update > 0) {
+								booklist[i].update = array[i].update + (booklist[i].update ? booklist[i].update : 0);
+								for (var s = 0; s < array[i].chapter.length; s++)
+									booklist[i].chapter.push(array[i].chapter[s]);
+							}
+						}
+						this.book_list = booklist;
+						uni.setStorageSync('booklist', booklist);
+					},
+					complete: () => {
+						uni.hideNavigationBarLoading();
+						uni.stopPullDownRefresh();
+					}
+				})
 			}
 		},
 		onShow() {
@@ -111,48 +152,10 @@
 		},
 		onLoad() {
 			this.book_list = uni.getStorageSync('booklist');
-			console.log(this.book_list);
+			//this.updateBook();
 		},
 		onPullDownRefresh() {
-			if (this.book_list.length == 0) uni.stopPullDownRefresh();
-			uni.showNavigationBarLoading();
-			var booklist = this.book_list
-			var newBooklist = [];
-			for (var i = 0; i < booklist.length; i++) {
-				// for (var j = 0; j < booklist[i].chapter.length;j++)
-				//   if (booklist[i].chapter[j].body)
-				//     delete booklist[i].chapter[j].body;
-				var newBook = {};
-				newBook.chapterlength = booklist[i].chapter.length;
-				newBook.webid = booklist[i]._id;
-				newBook.url = booklist[i].url;
-				newBooklist.push(newBook);
-			}
-			var _this = this;
-			uni.request({
-				url: this.api_url['bookupdate'],
-				method: 'POST',
-				header: {
-				  'content-type': 'application/x-www-form-urlencoded'
-				},
-				data: JSON.stringify(newBooklist),
-				success: (res) => {
-					var array = res.data;
-					for (var i = 0; i < array.length; i++) {
-						if (array[i].update > 0) {
-							booklist[i].update = array[i].update + (booklist[i].update ? booklist[i].update : 0);
-							for (var s = 0; s < array[i].chapter.length; s++)
-								booklist[i].chapter.push(array[i].chapter[s]);
-						}
-					}
-					this.book_list = booklist;
-					uni.setStorageSync('booklist', booklist);
-				},
-				complete: () => {
-					uni.hideNavigationBarLoading();
-					uni.stopPullDownRefresh();
-				}
-			})
+			this.updateBook();
 		}
 	}
 </script>
